@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+  <html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Аня и Вася — Свадьба</title>
+    <style>
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: Georgia, serif; background: linear-gradient(135deg, #fff0f6 0%, #f0f4ff 100%); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px 20px; }
+          h1 { font-size: 2.8em; color: #4a1a4a; margin-bottom: 0.2em; text-align: center; }
+    .subtitle { font-size: 1.3em; color: #7a4a7a; margin-bottom: 2.5em; text-align: center; }
+    .cards { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; }
+    .card { background: white; border-radius: 20px; padding: 40px 50px; text-decoration: none; box-shadow: 0 8px 30px rgba(0,0,0,0.1); transition: transform 0.2s, box-shadow 0.2s; text-align: center; min-width: 220px; }
+    .card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(0,0,0,0.15); }
+    .card.girls { border-top: 6px solid #e91e8c; }
+    .card.boys { border-top: 6px solid #1976d2; }
+    .card .emoji { font-size: 3em; display: block; margin-bottom: 0.3em; }
+    .card h2 { font-size: 1.8em; margin-bottom: 0.3em; }
+    .card.girls h2 { color: #c2185b; }
+          .card.boys h2 { color: #1565c0; }
+    .card p { color: #666; font-size: 1em; }
+  </style>
+    </head>
+    <body>
+      <h1>💍 Аня и Вася</h1>
+      <p class="subtitle">Наша свадьба вскоре!</p>
+      <div class="cards">
+        <a href="devichnik/" class="card girls">
+          <span class="emoji">💜🌸💄</span>
+          <h2>Девичник</h2>
+          <p>Вечер невесты</p>
+        </a>
+        <a href="malchishnik/" class="card boys">
+          <span class="emoji">💙🍺🎸</span>
+          <h2>Мальчишник</h2>
+          <p>Вечер жениха</p>
+        </a>
+      </div>
+    </body>
+    </html>
