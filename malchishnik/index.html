@@ -1,20 +1,526 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Мальчишник — Аня и Вася</title>
-        <style>
-            body { margin: 0; font-family: Georgia, serif; background: #f0f4ff; color: #1a2d5a; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center; padding: 20px; box-sizing: border-box; }
-                h1 { font-size: 2.5em; margin-bottom: 0.3em; }
-                    p { font-size: 1.2em; max-width: 500px; }
-                        .emoji { font-size: 3em; margin: 0.3em 0; }
-                          </style>
-                          </head>
-                          <body>
-                            <div class="emoji">💙🍺🎸</div>
-                              <h1>Мальчишник</h1>
-                                <p>Добро пожаловать на страницу мальчишника!</p>
-                                  <p>Здесь будут все подробности о нашем вечере жениха.</p>
-                                  </body>
-                                  </html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Мальчишник ✦ выезд</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500;600;700&family=Saira:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   ⚙️  НАСТРОЙКИ ВЫЕЗДА — меняйте только блок CONFIG в <script>
+   (имя, дата, точка сбора, времена, кодовые слова).
+   ============================================================ */
+:root{
+  --bg:#0c0e11;
+  --surface:#161a1f;
+  --surface2:#1d2228;
+  --amber:#ff8a1e;
+  --amber2:#ffb454;
+  --steel:#6fc0e6;
+  --danger:#e23b2e;
+  --ink:#f3f5f8;
+  --muted:#aeb7c2;
+  --line:#2c333c;
+  --foil:linear-gradient(135deg,#ffe0ad 0%,#ff9e2c 26%,#ffcf8a 50%,#d9701a 74%,#ffe0ad 100%);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{background:#0c0e11}
+html,body{overflow-x:hidden}
+body{
+  font-family:'Saira',sans-serif;
+  color:var(--ink);
+  background-color:#0c0e11;
+  min-height:100vh;
+  position:relative;
+}
+/* отдельный фоновый слой (не зависит от стилей body/html, которые
+   просмотрщик может перебивать на белый) */
+#bg{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-color:#0c0e11;
+  background-image:
+    radial-gradient(120% 70% at 50% -8%, rgba(255,138,30,.10), transparent 55%),
+    radial-gradient(120% 100% at 50% 40%, transparent 52%, rgba(0,0,0,.6) 100%),
+    linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
+  background-size:auto, auto, 46px 46px, 46px 46px;
+}
+/* плёночное зерно */
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.35;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");}
+.wrap{max-width:480px;margin:0 auto;padding:0 18px 80px;position:relative;z-index:2}
+
+/* ---------- ТИПОГРАФИКА ---------- */
+.display{font-family:'Anton',sans-serif;font-weight:400;letter-spacing:.5px;line-height:.98;text-transform:uppercase}
+.label{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:2px}
+.mono{font-variant-numeric:tabular-nums}
+
+/* ---------- КОНВЕРТ-ДОСЬЕ (интро) ---------- */
+#envelope{
+  position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:24px;
+  background:
+    radial-gradient(120% 70% at 50% 18%, rgba(255,138,30,.14), transparent 60%),
+    #0c0e11;
+  transition:opacity .7s ease, transform .7s ease;
+}
+#envelope.open{opacity:0;transform:scale(1.12);pointer-events:none}
+.env-eyebrow{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:4px;
+  text-transform:uppercase;font-size:13px;color:var(--amber);margin-bottom:6px}
+.env-svg{width:262px;height:auto;margin:6px 0 26px;
+  filter:drop-shadow(0 12px 28px rgba(0,0,0,.6));
+  animation:floaty 3.6s ease-in-out infinite;}
+@keyframes floaty{50%{transform:translateY(-9px)}}
+.tap-hint{font-family:'Oswald',sans-serif;letter-spacing:2px;text-transform:uppercase;
+  font-size:13px;color:var(--muted);margin-bottom:18px}
+.btn-open{
+  border:none;cursor:pointer;font-family:'Oswald',sans-serif;font-weight:700;
+  font-size:15px;letter-spacing:2px;text-transform:uppercase;color:#11140f;
+  padding:15px 38px;border-radius:6px;background:var(--amber);
+  box-shadow:0 6px 0 #b85f06, 0 10px 22px rgba(255,138,30,.35);
+  transition:transform .1s, box-shadow .1s}
+.btn-open:active{transform:translateY(4px);box-shadow:0 2px 0 #b85f06,0 6px 14px rgba(255,138,30,.3)}
+
+/* ---------- HERO ---------- */
+.hero{padding:42px 0 6px;text-align:center}
+.eyebrow{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:4px;text-transform:uppercase;
+  font-size:12px;color:var(--amber);margin-bottom:8px}
+.hero h1{font-size:clamp(30px,10.5vw,50px);
+  background:var(--foil);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 2px 1px rgba(0,0,0,.55));}
+.hero h1 .ul{display:inline-block;height:5px;width:70px;background:var(--foil);margin-top:14px;border-radius:2px;-webkit-text-fill-color:initial}
+.hero .name{display:block;font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
+  letter-spacing:1px;font-size:clamp(22px,7vw,30px);color:var(--amber2);margin-top:14px}
+.date{margin-top:12px;font-family:'Oswald',sans-serif;font-weight:500;letter-spacing:2px;
+  text-transform:uppercase;font-size:12px;color:var(--muted)}
+
+/* ---------- ОБРАТНЫЙ ОТСЧЁТ ---------- */
+.countdown{display:flex;gap:8px;justify-content:center;margin:24px 0 6px}
+.cd-cell{flex:1;max-width:80px;background:var(--surface);border:1px solid var(--line);
+  border-radius:8px;padding:12px 6px;position:relative;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 16px 32px -22px rgba(0,0,0,.9)}
+.cd-cell::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--amber)}
+.cd-num{font-family:'Anton',sans-serif;font-size:28px;color:#fff}
+.cd-lbl{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:1.5px;color:var(--muted);
+  text-transform:uppercase;margin-top:4px}
+
+/* ---------- СЕКЦИИ ---------- */
+.section-title{font-family:'Anton',sans-serif;text-transform:uppercase;letter-spacing:.5px;
+  font-size:26px;color:#fff;margin:42px 0 14px;display:flex;align-items:center;gap:10px}
+.section-title .bar{width:6px;height:26px;background:var(--amber);border-radius:2px;flex:0 0 auto}
+
+/* ---------- КАРТА-БРИФИНГ (точка сбора) ---------- */
+.brief{background:var(--surface);border:1px solid var(--line);border-radius:12px;
+  padding:0;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 24px 50px -28px rgba(0,0,0,.95)}
+.brief-top{background:repeating-linear-gradient(45deg,#ff8a1e 0 14px,#11140f 14px 28px);height:10px}
+.brief-in{padding:20px}
+.brief .place{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:24px;color:#fff;line-height:1}
+.brief .sub{font-family:'Oswald',sans-serif;letter-spacing:1px;color:var(--muted);margin-top:4px;font-size:14px}
+.readout{display:flex;gap:10px;margin:16px 0}
+.readout div{flex:1;background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
+.readout .k{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+.readout .v{font-family:'Anton',sans-serif;font-size:22px;color:var(--amber2);margin-top:2px}
+.maplink{display:inline-flex;align-items:center;gap:8px;margin-top:4px;text-decoration:none;
+  font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:1px;text-transform:uppercase;font-size:13px;
+  color:#11140f;padding:12px 22px;border-radius:6px;background:var(--steel)}
+.prep{margin-top:18px;padding-top:16px;border-top:1px dashed var(--line)}
+.prep .row{display:flex;gap:10px;align-items:flex-start;margin:8px 0;font-size:14px;color:var(--ink)}
+.prep .row b{color:var(--amber2)}
+.prep .ico{flex:0 0 22px;font-size:16px}
+
+/* ---------- КВИЗ ---------- */
+.quiz{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 24px 50px -28px rgba(0,0,0,.95)}
+.q-text{font-family:'Oswald',sans-serif;font-weight:600;font-size:18px;text-transform:uppercase;
+  letter-spacing:.5px;margin-bottom:16px;text-align:center}
+.q-opts{display:grid;gap:10px}
+.q-opt{border:1px solid var(--line);background:var(--surface2);color:var(--ink);
+  padding:14px;border-radius:8px;font-family:'Saira';font-weight:600;font-size:15px;cursor:pointer;transition:.15s}
+.q-opt:active{transform:scale(.98)}
+@media (hover:hover){ .q-opt:hover{border-color:var(--amber);background:#23292f} }
+.q-progress{font-family:'Oswald',sans-serif;text-align:center;font-size:12px;letter-spacing:3px;
+  color:var(--amber);margin-bottom:14px}
+.q-result{text-align:center}
+.q-result .big{display:block;font-family:'Anton',sans-serif;text-transform:uppercase;font-size:26px;
+  color:var(--amber2);margin-bottom:8px}
+
+/* ---------- МАРКЕРЫ ПРОГРЕССА ---------- */
+.stamps{display:flex;justify-content:center;gap:12px;margin-bottom:18px}
+.stamp{width:60px;height:60px;border-radius:8px;display:grid;place-items:center;
+  border:2px dashed var(--line);color:var(--muted);font-size:22px;position:relative;transition:.35s}
+.stamp.done{border-style:solid;border-color:var(--amber);color:#fff;background:var(--surface2);
+  box-shadow:0 0 0 3px rgba(255,138,30,.18)}
+.stamp.done::after{content:"✓";position:absolute;bottom:-6px;right:-6px;background:var(--amber);
+  color:#11140f;width:20px;height:20px;border-radius:4px;font-size:12px;display:grid;place-items:center;font-weight:800}
+
+/* ---------- КАРТОЧКИ ЭТАПОВ ---------- */
+.stage{position:relative;border:1px solid var(--line);background:var(--surface);border-radius:12px;
+  padding:20px;margin-bottom:14px;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 24px 50px -30px rgba(0,0,0,.95)}
+.stage::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--amber)}
+.stage .idx{position:absolute;top:14px;right:16px;font-family:'Anton',sans-serif;font-size:30px;color:rgba(255,255,255,.07)}
+.stage h3{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:24px;color:#fff;line-height:1}
+.stage .when{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:1px;color:var(--amber2);font-size:14px;margin:6px 0 12px}
+.stage .row{display:flex;gap:10px;margin:8px 0;font-size:14px;color:var(--ink);align-items:flex-start}
+.stage .row b{color:var(--amber2)}
+.stage .ico{flex:0 0 22px;font-size:16px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.tag{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
+  padding:6px 12px;border-radius:5px;border:1px solid var(--line);color:var(--muted);background:var(--surface2)}
+
+/* locked */
+.stage.locked{border-style:dashed;text-align:center}
+.stage.locked::before{background:repeating-linear-gradient(180deg,var(--amber) 0 10px,transparent 10px 20px)}
+.lock-emoji{font-size:42px}
+.lock-title{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:24px;color:#fff;margin:8px 0 4px;letter-spacing:1px}
+.lock-teaser{color:var(--muted);font-size:14px;margin-bottom:8px}
+.lock-eta{font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:1px;color:var(--amber);margin-bottom:14px;text-transform:uppercase}
+.code-row{display:flex;gap:8px;justify-content:center}
+.code-row input{flex:1;max-width:180px;background:var(--surface2);border:1px solid var(--line);
+  border-radius:6px;padding:13px 16px;color:#fff;font-family:'Oswald';letter-spacing:2px;
+  text-align:center;text-transform:uppercase;outline:none}
+.code-row input:focus{border-color:var(--amber)}
+.code-row button{border:none;cursor:pointer;font-family:'Oswald';font-weight:700;color:#11140f;
+  padding:0 18px;border-radius:6px;background:var(--amber)}
+.code-err{color:var(--danger);font-size:12px;margin-top:10px;min-height:16px}
+
+/* ---------- ЧТО ВЗЯТЬ ---------- */
+.bring{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.bring div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:14px;font-weight:600;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
+.bring span{display:block;font-size:22px;margin-bottom:6px}
+
+/* ---------- FOOTER ---------- */
+.foot{text-align:center;margin-top:44px;color:var(--muted);font-size:14px}
+.foot .big{display:block;font-family:'Anton',sans-serif;text-transform:uppercase;font-size:24px;color:var(--amber2);margin-bottom:6px}
+
+#cfx{position:fixed;inset:0;pointer-events:none;z-index:40}
+.hidden{display:none!important}
+.reveal{animation:rise .5s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<div id="bg" aria-hidden="true"></div>
+
+<!-- ИНТРО: КОНВЕРТ-ДОСЬЕ -->
+<div id="envelope">
+  <div class="env-eyebrow">совершенно секретно</div>
+  <svg class="env-svg" viewBox="0 0 270 200" xmlns="http://www.w3.org/2000/svg" aria-label="конверт">
+    <defs>
+      <linearGradient id="manila" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0" stop-color="#e3c98e"/>
+        <stop offset="1" stop-color="#c9a861"/>
+      </linearGradient>
+    </defs>
+    <!-- лист-досье торчит сверху -->
+    <g>
+      <rect x="55" y="6" width="160" height="150" rx="4" fill="#f6f1e6" stroke="#b6a06a" stroke-width="2"/>
+      <line x1="72" y1="34" x2="198" y2="34" stroke="#c8b27e" stroke-width="3"/>
+      <line x1="72" y1="48" x2="198" y2="48" stroke="#d8c79b" stroke-width="2"/>
+      <line x1="72" y1="60" x2="170" y2="60" stroke="#d8c79b" stroke-width="2"/>
+      <text id="envName" x="135" y="24" text-anchor="middle" font-family="Oswald, sans-serif" font-size="15" letter-spacing="2" fill="#7a6533">ДОСЬЕ</text>
+    </g>
+    <!-- корпус конверта -->
+    <rect x="16" y="70" width="238" height="120" rx="8" fill="url(#manila)" stroke="#a98c4e" stroke-width="2.5"/>
+    <!-- клапан -->
+    <path d="M18 72 L135 150 L252 72" fill="none" stroke="#8f7536" stroke-width="2.5" stroke-linejoin="round"/>
+    <path d="M18 188 L96 132 M252 188 L174 132" stroke="rgba(120,90,30,.35)" stroke-width="2"/>
+    <!-- печать СЕКРЕТНО -->
+    <g transform="rotate(-12 135 124)">
+      <rect x="92" y="108" width="86" height="32" rx="4" fill="none" stroke="#d3382c" stroke-width="3"/>
+      <text x="135" y="130" text-anchor="middle" font-family="Oswald, sans-serif" font-weight="700" font-size="16" letter-spacing="1.5" fill="#d3382c">СЕКРЕТНО</text>
+    </g>
+  </svg>
+  <div class="tap-hint">досье готово к вскрытию</div>
+  <button class="btn-open" id="openBtn">ВСКРЫТЬ</button>
+</div>
+
+<canvas id="cfx"></canvas>
+
+<div class="wrap">
+  <!-- HERO -->
+  <header class="hero">
+    <div class="eyebrow">операция · только свои</div>
+    <h1 class="display">Мальчишник<br><span class="ul"></span></h1>
+    <span class="name" id="heroName">—</span>
+    <div class="date mono" id="dateLabel">—</div>
+
+    <div class="countdown" id="countdown">
+      <div class="cd-cell"><div class="cd-num mono" id="cdD">00</div><div class="cd-lbl">дней</div></div>
+      <div class="cd-cell"><div class="cd-num mono" id="cdH">00</div><div class="cd-lbl">часов</div></div>
+      <div class="cd-cell"><div class="cd-num mono" id="cdM">00</div><div class="cd-lbl">минут</div></div>
+      <div class="cd-cell"><div class="cd-num mono" id="cdS">00</div><div class="cd-lbl">секунд</div></div>
+    </div>
+  </header>
+
+  <!-- ТОЧКА СБОРА -->
+  <h2 class="section-title"><span class="bar"></span>Точка сбора</h2>
+  <div class="brief">
+    <div class="brief-top"></div>
+    <div class="brief-in" id="briefIn"></div>
+  </div>
+
+  <!-- КВИЗ -->
+  <h2 class="section-title"><span class="bar"></span>Боевая готовность</h2>
+  <div class="quiz" id="quiz">
+    <div class="q-progress" id="qProgress"></div>
+    <div class="q-text" id="qText"></div>
+    <div class="q-opts" id="qOpts"></div>
+  </div>
+
+  <!-- МАРШРУТ -->
+  <h2 class="section-title hidden" id="routeTitle"><span class="bar"></span>Маршрут выезда</h2>
+  <div class="stamps hidden" id="stamps"></div>
+  <div id="stages" class="hidden"></div>
+
+  <!-- ЧТО ВЗЯТЬ -->
+  <h2 class="section-title hidden" id="bringTitle"><span class="bar"></span>Снаряжение</h2>
+  <div class="bring hidden" id="bring"></div>
+
+  <!-- FOOTER -->
+  <div class="foot">
+    <span class="big">погнали 🔥</span>
+    остальное — засекречено. просто будь на точке вовремя.
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   ⚙️  CONFIG — ВСЁ РЕДАКТИРУЕТСЯ ЗДЕСЬ
+   ============================================================ */
+const CONFIG = {
+  heroName: "Вася",
+  dateLabel: "Суббота · 13 июня · сбор 18:30",
+  startISO:  "2026-06-13T18:30:00",      // обратный отсчёт (формат: ГГГГ-ММ-ДДTчч:мм:сс)
+
+  // ТОЧКА СБОРА — видно сразу (он добирается сам).
+  meet: {
+    place:     "Гребной канал",
+    address:   "Ростов-на-Дону",
+    time:      "18:30",
+    mapUrl:    "https://yandex.ru/maps/?text=Гребной канал Ростов-на-Дону",
+    // подготовка без спойлеров (что именно будет — секрет):
+    dressCode: "спортивный стиль, закрытая обувь, одежда, которую не жалко испачкать",
+    bringNote: "возьми с собой комплект сменной одежды — будет во что переодеться",
+  },
+
+  // Разогрев-квиз (по желанию)
+  quiz: [
+    { q:"Настрой на сегодня?",          opts:["На максимум 💪","Готов на всё"] },
+    { q:"Сменную одежду взял?",         opts:["Так точно ✅","Уже в сумке"] },
+    { q:"Главное правило вечера:",      opts:["Что было — осталось тут 🤐","Фоток побольше"] },
+  ],
+  quizVerdict: { title:"Боевая готовность: 100%", text:"Тогда вперёд. Детали выезда — ниже 👇" },
+
+  // ЭТАПЫ. type:"secret" — сюрприз: открывается в unlockISO ИЛИ раньше по коду.
+  stages: [
+    {
+      type:"secret",
+      emoji:"🏍️",
+      teaser:"Первый этап — с мотором, грязью и адреналином. Не зря просили одежду, которую не жалко 😏",
+      unlockISO:"2026-06-13T19:00:00",
+      code:"ГАЗУЮ",
+      revealEmoji:"🏍️",
+      revealTitle:"Квадроциклы",
+      revealWhen:"19:00",
+      lines:[
+        { ico:"🏍️", html:"Гоняем на <b>квадроциклах</b> по бездорожью" },
+        { ico:"🧰", html:"Экипировка и инструктаж — на месте" },
+        { ico:"📸", html:"Готовь камеру, будет жара" },
+      ],
+      tags:["off-road","адреналин"]
+    },
+    {
+      type:"secret",
+      emoji:"🏡",
+      teaser:"Финал — там, где можно выдохнуть, переодеться и продолжить вечер по-человечески.",
+      unlockISO:"2026-06-13T21:00:00",
+      code:"ПРИВАЛ",
+      revealEmoji:"🏡",
+      revealTitle:"Загородный дом",
+      revealWhen:"21:00",
+      lines:[
+        { ico:"🏡", html:"Едем в <b>дом</b> — там уже всё готово" },
+        { ico:"👕", html:"Переодеваемся в сухое и чистое" },
+        { ico:"🍖", html:"Отдых, стол и продолжение вечера" },
+      ],
+      tags:["отдых","свои люди"]
+    },
+  ],
+
+  bring:[
+    { emoji:"👕", text:"Сменная одежда — переодеться после" },
+    { emoji:"👟", text:"Закрытая обувь, которую не жалко" },
+    { emoji:"🧥", text:"Куртка/ветровка — вечером прохладно" },
+    { emoji:"🔥", text:"Боевой настрой" },
+  ],
+};
+
+/* ============================================================
+   ⚙️  ЛОГИКА (обычно править не нужно)
+   ============================================================ */
+const $ = (s,el=document)=>el.querySelector(s);
+const $$ = (s,el=document)=>[...el.querySelectorAll(s)];
+const unlocked = CONFIG.stages.map(s => s.type === "open");
+
+// ---- КОНВЕРТ ----
+$("#openBtn").addEventListener("click", ()=>{
+  $("#envelope").classList.add("open");
+  burst(90);
+  setTimeout(()=>$("#envelope").remove(), 750);
+});
+
+// ---- HERO ----
+$("#heroName").textContent = CONFIG.heroName;
+$("#dateLabel").textContent = CONFIG.dateLabel;
+const _en = $("#envName"); if(_en) _en.textContent = "ДОСЬЕ";
+
+// ---- ТОЧКА СБОРА ----
+const m = CONFIG.meet;
+const _sd = new Date(CONFIG.startISO);
+const dateShort = String(_sd.getDate()).padStart(2,"0")+"."+String(_sd.getMonth()+1).padStart(2,"0");
+$("#briefIn").innerHTML =
+  `<div class="place">${m.place}</div>
+   <div class="sub">${m.address}</div>
+   <div class="readout">
+     <div><div class="k">сбор в</div><div class="v mono">${m.time}</div></div>
+     <div><div class="k">дата</div><div class="v mono">${dateShort}</div></div>
+   </div>
+   ${m.mapUrl?`<a class="maplink" target="_blank" rel="noopener" href="${m.mapUrl}">📍 Открыть на карте</a>`:""}
+   <div class="prep">
+     <div class="row"><span class="ico">👕</span><div>Дресс-код: <b>${m.dressCode}</b></div></div>
+     <div class="row"><span class="ico">🎒</span><div><b>${m.bringNote}</b></div></div>
+     <div class="row"><span class="ico">🤫</span><div>Что будет дальше — сюрприз. Просто приезжай вовремя.</div></div>
+   </div>`;
+
+// ---- ОБРАТНЫЙ ОТСЧЁТ ----
+function tickCountdown(){
+  const diff = new Date(CONFIG.startISO) - new Date();
+  const cd = $("#countdown");
+  if (diff <= 0){ cd.innerHTML = '<div class="cd-cell" style="max-width:none"><div class="cd-num">🚀</div><div class="cd-lbl">погнали!</div></div>'; return; }
+  const d=Math.floor(diff/864e5), h=Math.floor(diff/36e5)%24, mm=Math.floor(diff/6e4)%60, s=Math.floor(diff/1e3)%60;
+  const z=n=>String(n).padStart(2,"0");
+  $("#cdD").textContent=z(d); $("#cdH").textContent=z(h); $("#cdM").textContent=z(mm); $("#cdS").textContent=z(s);
+}
+tickCountdown(); setInterval(tickCountdown,1000);
+
+// ---- КВИЗ ----
+let qi = 0;
+function renderQuiz(){
+  const quiz = CONFIG.quiz;
+  if (qi >= quiz.length){
+    $("#quiz").innerHTML =
+      `<div class="q-result reveal"><span class="big">${CONFIG.quizVerdict.title}</span>
+       <div style="color:var(--muted)">${CONFIG.quizVerdict.text}</div></div>`;
+    revealRoute();
+    return;
+  }
+  $("#qProgress").textContent = `ЭТАП ${qi+1} / ${quiz.length}`;
+  $("#qText").textContent = quiz[qi].q;
+  const box = $("#qOpts"); box.innerHTML = "";
+  quiz[qi].opts.forEach(o=>{
+    const b=document.createElement("button");
+    b.className="q-opt"; b.textContent=o;
+    b.onclick=()=>{ qi++; renderQuiz(); };
+    box.appendChild(b);
+  });
+}
+function revealRoute(){
+  ["#routeTitle","#stamps","#stages","#bringTitle","#bring"].forEach(s=>$(s).classList.remove("hidden"));
+  renderStages();
+  burst(80);
+  setTimeout(()=>$("#routeTitle").scrollIntoView({behavior:"smooth",block:"start"}), 450);
+}
+renderQuiz();
+
+// ---- МАРКЕРЫ ----
+function renderStamps(){
+  $("#stamps").innerHTML = CONFIG.stages.map((s,i)=>{
+    const e = unlocked[i] ? (s.revealEmoji||s.emoji) : s.emoji;
+    return `<div class="stamp ${unlocked[i]?'done':''}">${unlocked[i]?e:'?'}</div>`;
+  }).join("");
+}
+
+// ---- ЭТАПЫ ----
+function stageOpenHTML(s){
+  const lines = s.lines.map(l=>`<div class="row"><span class="ico">${l.ico}</span><div>${l.html}</div></div>`).join("");
+  const tags = (s.tags||[]).map(t=>`<span class="tag">${t}</span>`).join("");
+  const emoji = s.revealEmoji||s.emoji, title = s.revealTitle||s.title, when = s.revealWhen||s.when;
+  return `<div class="stage reveal">
+    <div class="idx">${emoji}</div>
+    <h3>${title}</h3>
+    ${when?`<div class="when">⏱ ${when}</div>`:""}
+    ${lines}
+    ${s.mapUrl?`<a class="maplink" target="_blank" rel="noopener" href="${s.mapUrl}">📍 На карте</a>`:""}
+    ${tags?`<div class="tags">${tags}</div>`:""}
+  </div>`;
+}
+function stageLockedHTML(s,i){
+  return `<div class="stage locked" data-i="${i}">
+    <div class="lock-emoji">🔒</div>
+    <div class="lock-title">Засекречено</div>
+    <div class="lock-teaser">${s.teaser||""}</div>
+    <div class="lock-eta">рассекретится в ${fmtTime(s.unlockISO)} · или раньше — по кодовому слову</div>
+    <div class="code-row">
+      <input type="text" placeholder="код" maxlength="20" data-code="${i}">
+      <button data-unlock="${i}">→</button>
+    </div>
+    <div class="code-err" data-err="${i}"></div>
+  </div>`;
+}
+function fmtTime(iso){ const d=new Date(iso); return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); }
+
+function renderStages(){
+  $("#stages").innerHTML = CONFIG.stages.map((s,i)=>
+    unlocked[i] ? stageOpenHTML(s) : stageLockedHTML(s,i)
+  ).join("");
+  $$("[data-unlock]").forEach(btn=>{ btn.onclick = ()=>tryCode(+btn.dataset.unlock); });
+  $$("[data-code]").forEach(inp=>{ inp.addEventListener("keydown",e=>{ if(e.key==="Enter") tryCode(+inp.dataset.code); }); });
+  renderStamps();
+}
+function tryCode(i){
+  const inp = $(`[data-code="${i}"]`), err = $(`[data-err="${i}"]`);
+  const val = (inp.value||"").trim().toUpperCase();
+  if (val === String(CONFIG.stages[i].code||"").toUpperCase()){ doUnlock(i); }
+  else { err.textContent = "Неверный код. Спроси у организаторов 😏"; inp.value=""; inp.focus(); }
+}
+function doUnlock(i){
+  unlocked[i] = true;
+  // localStorage.setItem("unlocked_m", JSON.stringify(unlocked)); // ← для продакшена
+  renderStages(); burst(120);
+}
+function checkTime(){
+  let changed=false;
+  CONFIG.stages.forEach((s,i)=>{
+    if(s.type==="secret" && !unlocked[i] && s.unlockISO && new Date()>=new Date(s.unlockISO)){ unlocked[i]=true; changed=true; }
+  });
+  if(changed){ renderStages(); burst(120); }
+}
+checkTime(); setInterval(checkTime, 15000);
+renderStages();
+
+// ---- ЧТО ВЗЯТЬ ----
+$("#bring").innerHTML = CONFIG.bring.map(b=>`<div><span>${b.emoji}</span>${b.text}</div>`).join("");
+
+/* ---- КОНФЕТТИ ---- */
+const cv=$("#cfx"), ctx=cv.getContext("2d"); let parts=[];
+function size(){cv.width=innerWidth;cv.height=innerHeight;} size(); addEventListener("resize",size);
+const COLORS=["#ff8a1e","#ffb454","#6fc0e6","#f3f5f8","#c9a861"];
+function burst(n){
+  for(let i=0;i<n;i++){
+    parts.push({x:innerWidth/2,y:innerHeight*0.4, vx:(Math.random()-.5)*12, vy:(Math.random()-.9)*14,
+      g:.3+Math.random()*.2, s:5+Math.random()*7, c:COLORS[i%COLORS.length], life:80+Math.random()*40, rot:Math.random()*6});
+  }
+}
+function loop(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  parts.forEach(p=>{ p.x+=p.vx; p.y+=p.vy; p.vy+=p.g; p.life--; p.rot+=.2;
+    ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot); ctx.fillStyle=p.c; ctx.globalAlpha=Math.max(0,p.life/100);
+    ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*0.6); ctx.restore(); });
+  parts=parts.filter(p=>p.life>0 && p.y<cv.height+40);
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>
