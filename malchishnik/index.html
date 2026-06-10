@@ -2,200 +2,260 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Мальчишник ✦ выезд</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500;600;700&family=Saira:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,500;1,600&family=Lora:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   ⚙️  НАСТРОЙКИ ВЫЕЗДА — меняйте только блок CONFIG в <script>
-   (имя, дата, точка сбора, времена, кодовые слова).
-   ============================================================ */
 :root{
-  --bg:#0c0e11;
-  --surface:#161a1f;
-  --surface2:#1d2228;
-  --amber:#ff8a1e;
-  --amber2:#ffb454;
-  --steel:#6fc0e6;
-  --danger:#e23b2e;
-  --ink:#f3f5f8;
-  --muted:#aeb7c2;
-  --line:#2c333c;
-  --foil:linear-gradient(135deg,#ffe0ad 0%,#ff9e2c 26%,#ffcf8a 50%,#d9701a 74%,#ffe0ad 100%);
+  --cream:#f6e6c4;
+  --cream-card:#faf0d8;
+  --wine:#9e1f33;
+  --wine-deep:#7d1726;
+  --ink:#42301f;
+  --gold:#c8a13c;
+  --gold-soft:#d9bf7a;
+  --line:rgba(158,31,51,.28);
+  --line-gold:rgba(200,161,60,.55);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{background:#0c0e11}
+html{background:#f6e6c4}
 html,body{overflow-x:hidden}
-body{
-  font-family:'Saira',sans-serif;
-  color:var(--ink);
-  background-color:#0c0e11;
-  min-height:100vh;
-  position:relative;
-}
-/* отдельный фоновый слой (не зависит от стилей body/html, которые
-   просмотрщик может перебивать на белый) */
-#bg{
-  position:fixed;inset:0;z-index:0;pointer-events:none;
-  background-color:#0c0e11;
-  background-image:
-    radial-gradient(120% 70% at 50% -8%, rgba(255,138,30,.10), transparent 55%),
-    radial-gradient(120% 100% at 50% 40%, transparent 52%, rgba(0,0,0,.6) 100%),
-    linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.022) 1px, transparent 1px);
-  background-size:auto, auto, 46px 46px, 46px 46px;
-}
-/* плёночное зерно */
-body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.35;mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");}
-.wrap{max-width:480px;margin:0 auto;padding:0 18px 80px;position:relative;z-index:2}
+body{font-family:'Lora',Georgia,serif;color:var(--ink);background-color:#f6e6c4;min-height:100vh;position:relative;-webkit-font-smoothing:antialiased}
 
-/* ---------- ТИПОГРАФИКА ---------- */
-.display{font-family:'Anton',sans-serif;font-weight:400;letter-spacing:.5px;line-height:.98;text-transform:uppercase}
-.label{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;letter-spacing:2px}
+#bg{position:fixed;inset:0;z-index:0;pointer-events:none;background-color:var(--cream);
+  background-image:radial-gradient(rgba(158,31,51,.05) 1.1px, transparent 1.2px);background-size:22px 22px;}
+.wrap{max-width:460px;margin:0 auto;padding:0 18px 80px;position:relative;z-index:2}
+
+.display{font-family:'Playfair Display',serif;font-weight:900;color:var(--wine);line-height:1;letter-spacing:.5px}
+.label{font-family:'Lora',serif;font-style:italic;color:var(--ink)}
 .mono{font-variant-numeric:tabular-nums}
 
-/* ---------- КОНВЕРТ-ДОСЬЕ (интро) ---------- */
-#envelope{
-  position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;text-align:center;padding:24px;
-  background:
-    radial-gradient(120% 70% at 50% 18%, rgba(255,138,30,.14), transparent 60%),
-    #0c0e11;
-  transition:opacity .7s ease, transform .7s ease;
-}
-#envelope.open{opacity:0;transform:scale(1.12);pointer-events:none}
-.env-eyebrow{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:4px;
-  text-transform:uppercase;font-size:13px;color:var(--amber);margin-bottom:6px}
-.env-svg{width:262px;height:auto;margin:6px 0 26px;
-  filter:drop-shadow(0 12px 28px rgba(0,0,0,.6));
-  animation:floaty 3.6s ease-in-out infinite;}
 @keyframes floaty{50%{transform:translateY(-9px)}}
-.tap-hint{font-family:'Oswald',sans-serif;letter-spacing:2px;text-transform:uppercase;
-  font-size:13px;color:var(--muted);margin-bottom:18px}
-.btn-open{
-  border:none;cursor:pointer;font-family:'Oswald',sans-serif;font-weight:700;
-  font-size:15px;letter-spacing:2px;text-transform:uppercase;color:#11140f;
-  padding:15px 38px;border-radius:6px;background:var(--amber);
-  box-shadow:0 6px 0 #b85f06, 0 10px 22px rgba(255,138,30,.35);
-  transition:transform .1s, box-shadow .1s}
-.btn-open:active{transform:translateY(4px);box-shadow:0 2px 0 #b85f06,0 6px 14px rgba(255,138,30,.3)}
 
-/* ---------- HERO ---------- */
-.hero{padding:42px 0 6px;text-align:center}
-.eyebrow{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:4px;text-transform:uppercase;
-  font-size:12px;color:var(--amber);margin-bottom:8px}
-.hero h1{font-size:clamp(30px,10.5vw,50px);
-  background:var(--foil);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 2px 1px rgba(0,0,0,.55));}
-.hero h1 .ul{display:inline-block;height:5px;width:70px;background:var(--foil);margin-top:14px;border-radius:2px;-webkit-text-fill-color:initial}
-.hero .name{display:block;font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;
-  letter-spacing:1px;font-size:clamp(22px,7vw,30px);color:var(--amber2);margin-top:14px}
-.date{margin-top:12px;font-family:'Oswald',sans-serif;font-weight:500;letter-spacing:2px;
-  text-transform:uppercase;font-size:12px;color:var(--muted)}
+/* декор */
+.crown{width:78px;height:auto;display:block;margin:0 auto 12px}
+.rings{width:62px;height:auto;display:block;margin:16px auto 0}
+.divider{display:flex;align-items:center;justify-content:center;gap:10px;margin:12px auto;max-width:210px}
+.divider::before,.divider::after{content:"";height:1px;flex:1;background:var(--line-gold)}
+.divider span{font-size:13px;color:var(--wine)}
+.card-index{position:absolute;font-family:'Playfair Display',serif;font-weight:800;color:var(--wine);line-height:.86;font-size:20px;text-align:center}
+.card-index .s{display:block;font-size:14px;margin-top:1px}
+.card-index.tl{top:12px;left:13px}
+.card-index.br{bottom:10px;right:12px;transform:rotate(180deg)}
 
-/* ---------- ОБРАТНЫЙ ОТСЧЁТ ---------- */
-.countdown{display:flex;gap:8px;justify-content:center;margin:24px 0 6px}
-.cd-cell{flex:1;max-width:80px;background:var(--surface);border:1px solid var(--line);
-  border-radius:8px;padding:12px 6px;position:relative;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 16px 32px -22px rgba(0,0,0,.9)}
-.cd-cell::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:var(--amber)}
-.cd-num{font-family:'Anton',sans-serif;font-size:28px;color:#fff}
-.cd-lbl{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:1.5px;color:var(--muted);
-  text-transform:uppercase;margin-top:4px}
+/* ОБЛОЖКА */
+#envelope{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;
+  background:var(--cream);background-image:radial-gradient(rgba(158,31,51,.05) 1.1px, transparent 1.2px);background-size:22px 22px;
+  transition:opacity .7s ease, transform .7s ease}
+#envelope.open{opacity:0;transform:scale(1.06);pointer-events:none}
+.env-eyebrow{display:none}
+.env-svg{width:230px;height:auto;margin:6px 0 26px;filter:drop-shadow(0 16px 34px rgba(80,20,20,.25));animation:floaty 4s ease-in-out infinite}
+.tap-hint{font-family:'Lora',serif;font-style:italic;font-size:15px;letter-spacing:0;text-transform:none;color:var(--ink);opacity:.8;margin-bottom:18px}
+.btn-open{border:none;cursor:pointer;font-family:'Playfair Display',serif;font-weight:700;font-size:15px;letter-spacing:2px;text-transform:uppercase;
+  color:#fbf0db;padding:15px 40px;border-radius:6px;background:var(--wine);box-shadow:0 8px 20px -8px rgba(125,23,38,.6);transition:transform .12s}
+.btn-open:active{transform:translateY(2px)}
 
-/* ---------- СЕКЦИИ ---------- */
-.section-title{font-family:'Anton',sans-serif;text-transform:uppercase;letter-spacing:.5px;
-  font-size:26px;color:#fff;margin:42px 0 14px;display:flex;align-items:center;gap:10px}
-.section-title .bar{width:6px;height:26px;background:var(--amber);border-radius:2px;flex:0 0 auto}
+/* HERO как карта */
+.hero{position:relative;margin:6px 0 8px;padding:44px 20px 52px;text-align:center;
+  background:var(--cream-card);border:1.5px solid var(--wine);border-radius:18px;box-shadow:0 14px 34px -22px rgba(80,20,20,.55)}
+.hero::after{content:"";position:absolute;inset:6px;border:1px solid var(--line);border-radius:13px;pointer-events:none}
+.eyebrow{font-family:'Lora',serif;font-style:italic;color:var(--ink);opacity:.85;font-size:15px;margin-bottom:6px}
+.hero h1{font-size:clamp(32px,11vw,50px)}
+.hero .name{display:block;font-family:'Playfair Display',serif;font-style:italic;font-weight:600;color:var(--wine-deep);font-size:clamp(26px,9vw,38px);margin-top:4px}
+.date{margin-top:6px;font-family:'Lora',serif;letter-spacing:1px;color:var(--ink);font-size:13px}
 
-/* ---------- КАРТА-БРИФИНГ (точка сбора) ---------- */
-.brief{background:var(--surface);border:1px solid var(--line);border-radius:12px;
-  padding:0;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 24px 50px -28px rgba(0,0,0,.95)}
-.brief-top{background:repeating-linear-gradient(45deg,#ff8a1e 0 14px,#11140f 14px 28px);height:10px}
-.brief-in{padding:20px}
-.brief .place{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:24px;color:#fff;line-height:1}
-.brief .sub{font-family:'Oswald',sans-serif;letter-spacing:1px;color:var(--muted);margin-top:4px;font-size:14px}
+/* ОТСЧЁТ */
+.countdown{display:flex;gap:8px;justify-content:center;margin:22px 0 4px}
+.cd-cell{flex:1;max-width:80px;background:var(--cream-card);border:1px solid var(--line);border-radius:10px;padding:12px 6px;position:relative;overflow:hidden;box-shadow:0 8px 18px -14px rgba(80,20,20,.4)}
+.cd-cell::before{display:none}
+.cd-num{font-family:'Playfair Display',serif;font-weight:800;font-size:28px;color:var(--wine);font-variant-numeric:tabular-nums}
+.cd-lbl{font-family:'Lora',serif;font-size:9px;letter-spacing:1.5px;color:var(--ink);opacity:.7;text-transform:uppercase;margin-top:5px}
+
+/* СЕКЦИИ */
+.section-title{font-family:'Playfair Display',serif;font-weight:800;text-transform:none;letter-spacing:0;font-size:24px;color:var(--wine);margin:46px 0 16px;display:block;text-align:center}
+.section-title .bar{display:none}
+
+/* ТОЧКА СБОРА */
+.brief{background:var(--cream-card);border:1px solid var(--line);border-radius:14px;padding:0;overflow:hidden;box-shadow:0 12px 28px -20px rgba(80,20,20,.45)}
+.brief-top{background:var(--wine);height:8px}
+.brief-in{padding:22px}
+.brief .place{font-family:'Playfair Display',serif;font-weight:800;font-size:25px;color:var(--wine);line-height:1.05}
+.brief .sub{font-family:'Lora',serif;font-style:italic;color:var(--ink);opacity:.85;margin-top:4px;font-size:15px}
 .readout{display:flex;gap:10px;margin:16px 0}
-.readout div{flex:1;background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:10px 12px}
-.readout .k{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
-.readout .v{font-family:'Anton',sans-serif;font-size:22px;color:var(--amber2);margin-top:2px}
-.maplink{display:inline-flex;align-items:center;gap:8px;margin-top:4px;text-decoration:none;
-  font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:1px;text-transform:uppercase;font-size:13px;
-  color:#11140f;padding:12px 22px;border-radius:6px;background:var(--steel)}
-.prep{margin-top:18px;padding-top:16px;border-top:1px dashed var(--line)}
-.prep .row{display:flex;gap:10px;align-items:flex-start;margin:8px 0;font-size:14px;color:var(--ink)}
-.prep .row b{color:var(--amber2)}
+.readout div{flex:1;background:#fff7e6;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.readout .k{font-family:'Lora',serif;font-style:italic;font-size:11px;color:var(--ink);opacity:.7}
+.readout .v{font-family:'Playfair Display',serif;font-weight:800;font-size:22px;color:var(--wine);margin-top:2px}
+.maplink{display:inline-flex;align-items:center;gap:8px;margin-top:4px;text-decoration:none;font-family:'Playfair Display',serif;font-weight:700;font-size:14px;letter-spacing:.5px;color:#fbf0db;padding:12px 22px;border-radius:8px;background:var(--wine)}
+.prep{margin-top:18px;padding-top:16px;border-top:1px solid var(--line)}
+.prep .row{display:flex;gap:10px;align-items:flex-start;margin:9px 0;font-size:14px;color:var(--ink);line-height:1.5}
+.prep .row b{color:var(--wine)}
 .prep .ico{flex:0 0 22px;font-size:16px}
 
-/* ---------- КВИЗ ---------- */
-.quiz{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:22px;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 24px 50px -28px rgba(0,0,0,.95)}
-.q-text{font-family:'Oswald',sans-serif;font-weight:600;font-size:18px;text-transform:uppercase;
-  letter-spacing:.5px;margin-bottom:16px;text-align:center}
+/* КВИЗ */
+.quiz{background:var(--cream-card);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 12px 28px -20px rgba(80,20,20,.45)}
+.q-text{font-family:'Playfair Display',serif;font-weight:700;font-size:18px;text-transform:none;letter-spacing:0;color:var(--wine);margin-bottom:18px;text-align:center;line-height:1.3}
 .q-opts{display:grid;gap:10px}
-.q-opt{border:1px solid var(--line);background:var(--surface2);color:var(--ink);
-  padding:14px;border-radius:8px;font-family:'Saira';font-weight:600;font-size:15px;cursor:pointer;transition:.15s}
+.q-opt{border:1px solid var(--line);background:#fff7e6;color:var(--ink);padding:14px;border-radius:8px;font-family:'Lora',serif;font-weight:600;font-size:15px;cursor:pointer;transition:.15s}
 .q-opt:active{transform:scale(.98)}
-@media (hover:hover){ .q-opt:hover{border-color:var(--amber);background:#23292f} }
-.q-progress{font-family:'Oswald',sans-serif;text-align:center;font-size:12px;letter-spacing:3px;
-  color:var(--amber);margin-bottom:14px}
+@media (hover:hover){.q-opt:hover{border-color:var(--gold);background:#fff}}
+.q-progress{font-family:'Lora',serif;font-style:italic;text-align:center;font-size:12px;letter-spacing:1px;color:var(--wine);opacity:.8;margin-bottom:14px}
 .q-result{text-align:center}
-.q-result .big{display:block;font-family:'Anton',sans-serif;text-transform:uppercase;font-size:26px;
-  color:var(--amber2);margin-bottom:8px}
+.q-result .big{display:block;font-family:'Playfair Display',serif;font-weight:800;text-transform:none;font-size:26px;color:var(--wine);margin-bottom:8px}
 
-/* ---------- МАРКЕРЫ ПРОГРЕССА ---------- */
-.stamps{display:flex;justify-content:center;gap:12px;margin-bottom:18px}
-.stamp{width:60px;height:60px;border-radius:8px;display:grid;place-items:center;
-  border:2px dashed var(--line);color:var(--muted);font-size:22px;position:relative;transition:.35s}
-.stamp.done{border-style:solid;border-color:var(--amber);color:#fff;background:var(--surface2);
-  box-shadow:0 0 0 3px rgba(255,138,30,.18)}
-.stamp.done::after{content:"✓";position:absolute;bottom:-6px;right:-6px;background:var(--amber);
-  color:#11140f;width:20px;height:20px;border-radius:4px;font-size:12px;display:grid;place-items:center;font-weight:800}
+/* МЕДАЛЬОНЫ */
+.stamps{display:flex;justify-content:center;gap:14px;margin-bottom:18px}
+.stamp{width:60px;height:60px;border-radius:50%;display:grid;place-items:center;border:1px dashed var(--line);color:var(--ink);opacity:.7;font-size:22px;position:relative;transition:.35s;background:var(--cream-card);font-family:'Playfair Display',serif;font-weight:800}
+.stamp.done{opacity:1;border:2px solid var(--gold);color:var(--wine);box-shadow:0 0 0 3px rgba(200,161,60,.16)}
+.stamp.done::after{content:"";position:absolute;inset:-5px;border-radius:50%;border:1px solid var(--line)}
 
-/* ---------- КАРТОЧКИ ЭТАПОВ ---------- */
-.stage{position:relative;border:1px solid var(--line);background:var(--surface);border-radius:12px;
-  padding:20px;margin-bottom:14px;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 24px 50px -30px rgba(0,0,0,.95)}
-.stage::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--amber)}
-.stage .idx{position:absolute;top:14px;right:16px;font-family:'Anton',sans-serif;font-size:30px;color:rgba(255,255,255,.07)}
-.stage h3{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:24px;color:#fff;line-height:1}
-.stage .when{font-family:'Oswald',sans-serif;font-weight:600;letter-spacing:1px;color:var(--amber2);font-size:14px;margin:6px 0 12px}
-.stage .row{display:flex;gap:10px;margin:8px 0;font-size:14px;color:var(--ink);align-items:flex-start}
-.stage .row b{color:var(--amber2)}
+/* ЭТАПЫ */
+.stage{position:relative;border:1px solid var(--line);background:var(--cream-card);border-radius:14px;padding:22px;margin-bottom:14px;overflow:hidden;box-shadow:0 12px 28px -20px rgba(80,20,20,.45)}
+.stage::before{display:none}
+.stage.locked{text-align:center;border:2px solid var(--wine);padding:24px 20px 22px;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 8px, rgba(158,31,51,.05) 8px 9px),
+    repeating-linear-gradient(-45deg, transparent 0 8px, rgba(158,31,51,.05) 8px 9px),
+    var(--cream-card)}
+.stage.locked::after{content:"";position:absolute;inset:6px;border:1px solid var(--line-gold);border-radius:10px;pointer-events:none}
+.stage.locked .ci{position:absolute;font-family:'Playfair Display',serif;font-weight:800;color:var(--wine);font-size:18px;line-height:.86;text-align:center;z-index:1}
+.stage.locked .ci i{display:block;font-style:normal;font-size:12px;margin-top:1px}
+.stage.locked .ci.tl{top:12px;left:14px}
+.stage.locked .ci.br{bottom:12px;right:14px;transform:rotate(180deg)}
+.cb-emblem{position:relative;width:58px;height:58px;margin:2px auto 12px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--gold);background:#fff7e6;font-size:27px;color:var(--wine);box-shadow:0 0 0 4px rgba(200,161,60,.14)}
+.cb-emblem .cb-lock{position:absolute;right:-7px;bottom:-7px;font-size:16px;background:var(--cream-card);border-radius:50%;padding:2px;line-height:1}
+.stage .idx{position:absolute;top:14px;right:18px;font-family:'Playfair Display',serif;font-weight:900;font-size:36px;color:rgba(158,31,51,.08)}
+.stage h3{font-family:'Playfair Display',serif;font-weight:800;font-size:25px;color:var(--wine);line-height:1}
+.stage .when{font-family:'Lora',serif;font-style:italic;color:var(--wine-deep);letter-spacing:.5px;font-size:14px;margin:6px 0 12px}
+.stage .row{display:flex;gap:10px;margin:9px 0;font-size:14px;color:var(--ink);align-items:flex-start;line-height:1.45}
+.stage .row b{color:var(--wine)}
 .stage .ico{flex:0 0 22px;font-size:16px}
 .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.tag{font-family:'Oswald',sans-serif;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;
-  padding:6px 12px;border-radius:5px;border:1px solid var(--line);color:var(--muted);background:var(--surface2)}
+.tag{font-family:'Lora',serif;font-style:italic;font-size:12px;letter-spacing:0;text-transform:none;padding:6px 12px;border-radius:6px;border:1px solid var(--line);color:var(--wine);background:#fff7e6}
 
 /* locked */
-.stage.locked{border-style:dashed;text-align:center}
-.stage.locked::before{background:repeating-linear-gradient(180deg,var(--amber) 0 10px,transparent 10px 20px)}
-.lock-emoji{font-size:42px}
-.lock-title{font-family:'Anton',sans-serif;text-transform:uppercase;font-size:24px;color:#fff;margin:8px 0 4px;letter-spacing:1px}
-.lock-teaser{color:var(--muted);font-size:14px;margin-bottom:8px}
-.lock-eta{font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:1px;color:var(--amber);margin-bottom:14px;text-transform:uppercase}
+.lock-emoji{font-size:40px;animation:floaty 3.6s ease-in-out infinite}
+.lock-title{font-family:'Playfair Display',serif;font-weight:800;font-size:24px;color:var(--wine);margin:10px 0 6px;letter-spacing:.5px}
+.lock-teaser{color:var(--ink);font-size:14px;margin-bottom:10px;line-height:1.5}
+.lock-eta{font-family:'Lora',serif;font-style:italic;font-size:13px;color:var(--wine-deep);margin-bottom:16px;text-transform:none}
 .code-row{display:flex;gap:8px;justify-content:center}
-.code-row input{flex:1;max-width:180px;background:var(--surface2);border:1px solid var(--line);
-  border-radius:6px;padding:13px 16px;color:#fff;font-family:'Oswald';letter-spacing:2px;
-  text-align:center;text-transform:uppercase;outline:none}
-.code-row input:focus{border-color:var(--amber)}
-.code-row button{border:none;cursor:pointer;font-family:'Oswald';font-weight:700;color:#11140f;
-  padding:0 18px;border-radius:6px;background:var(--amber)}
-.code-err{color:var(--danger);font-size:12px;margin-top:10px;min-height:16px}
+.code-row input{flex:1;max-width:180px;background:#fff7e6;border:1px solid var(--line);border-radius:8px;padding:13px 16px;color:var(--ink);font-family:'Playfair Display',serif;letter-spacing:2px;text-align:center;text-transform:uppercase;outline:none}
+.code-row input::placeholder{color:var(--ink);opacity:.4}
+.code-row input:focus{border-color:var(--gold)}
+.code-row button{border:none;cursor:pointer;font-family:'Playfair Display',serif;font-weight:700;color:#fbf0db;padding:0 18px;border-radius:8px;background:var(--wine)}
+.code-err{color:var(--wine-deep);font-size:12px;margin-top:10px;min-height:16px}
 
-/* ---------- ЧТО ВЗЯТЬ ---------- */
+/* СНАРЯЖЕНИЕ */
 .bring{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.bring div{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px;font-size:14px;font-weight:600;box-shadow:inset 0 1px 0 rgba(255,255,255,.04)}
-.bring span{display:block;font-size:22px;margin-bottom:6px}
+.bring div{background:var(--cream-card);border:1px solid var(--line);border-radius:12px;padding:14px;font-size:14px;font-weight:600;color:var(--ink);line-height:1.4}
+.bring span{display:block;font-size:24px;margin-bottom:6px}
 
-/* ---------- FOOTER ---------- */
-.foot{text-align:center;margin-top:44px;color:var(--muted);font-size:14px}
-.foot .big{display:block;font-family:'Anton',sans-serif;text-transform:uppercase;font-size:24px;color:var(--amber2);margin-bottom:6px}
+/* FOOTER */
+.foot{text-align:center;margin-top:48px;color:var(--ink);font-size:14px;line-height:1.6}
+.foot .big{display:block;font-family:'Playfair Display',serif;font-weight:800;text-transform:none;font-size:26px;color:var(--wine);margin-bottom:8px}
 
 #cfx{position:fixed;inset:0;pointer-events:none;z-index:40}
 .hidden{display:none!important}
-.reveal{animation:rise .5s ease both}
+.reveal{animation:rise .55s ease both}
 @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+
+
+/* ================= АДАПТИВ ================= */
+body{min-height:100dvh}
+.env-svg{width:min(230px,62vw);max-height:58vh}
+/* мелкие телефоны */
+@media (max-width:380px){
+  .wrap{padding-left:14px;padding-right:14px}
+  .hero{padding:38px 16px 24px}
+  .countdown{gap:6px}
+  .cd-cell{padding:10px 4px;border-radius:9px}
+  .cd-num{font-size:24px}
+  .cd-lbl{font-size:8px;letter-spacing:1px}
+  .section-title{font-size:22px;margin:40px 0 14px}
+  .crown{width:66px}
+  .rings{width:56px}
+  .card-index{font-size:20px}
+  .card-index .s{font-size:14px}
+  .q-text{font-size:16px}
+  .stage,.quiz,.taxi,.brief-in{padding:18px}
+}
+@media (max-width:330px){
+  .cd-num{font-size:21px}
+  .cd-lbl{letter-spacing:.4px}
+  .taxi-row{flex-wrap:wrap}
+  .taxi-row button{width:100%;padding:13px 0}
+}
+/* планшеты / десктоп — держим карту по центру, чуть шире */
+@media (min-width:600px){
+  .wrap{max-width:480px}
+}
+/* низкие/ландшафтные экраны — чтобы обложка влезала */
+@media (max-height:620px){
+  #envelope{justify-content:flex-start;overflow-y:auto;padding-top:20px;padding-bottom:20px}
+  .env-svg{max-height:46vh;margin:4px 0 18px}
+}
+
+/* ===== КОЛОДА (раздача карт снизу) ===== */
+.deck{position:relative;width:200px;height:286px;margin:6px auto 26px;transform-origin:center}
+.pcard{position:absolute;inset:0;border-radius:16px;opacity:0;
+  transition:transform .7s cubic-bezier(.2,.8,.2,1);will-change:transform;backface-visibility:hidden}
+.pcard.side{background:var(--cream-card);border:2px solid var(--wine);box-shadow:0 10px 22px -14px rgba(80,20,20,.55);display:grid;place-items:center}
+.pcard.side .mini{font-size:46px;color:var(--wine);line-height:1}
+.pcard .mini-index{position:absolute;font-family:'Playfair Display',serif;font-weight:800;color:var(--wine);font-size:17px;line-height:1}
+.pcard .mini-index.tl{top:9px;left:11px}
+.pcard .mini-index.br{bottom:9px;right:11px;transform:rotate(180deg)}
+.pcard.front svg{width:100%;height:100%;display:block;filter:drop-shadow(0 14px 28px rgba(80,20,20,.35))}
+/* раздача: влетают снизу по очереди */
+.pcard.left{z-index:1;animation:dealLeft .56s .12s cubic-bezier(.2,.75,.25,1.1) both}
+.pcard.right{z-index:2;animation:dealRight .56s .34s cubic-bezier(.2,.75,.25,1.1) both}
+.pcard.front{z-index:3;animation:dealFront .58s .58s cubic-bezier(.2,.75,.25,1.1) both}
+@keyframes dealLeft{0%{opacity:0;transform:translateY(140%) rotate(-26deg) scale(.95)}55%{opacity:1}100%{opacity:1;transform:rotate(-8deg) translate(-15px,3px)}}
+@keyframes dealRight{0%{opacity:0;transform:translateY(140%) rotate(22deg) scale(.95)}55%{opacity:1}100%{opacity:1;transform:rotate(7deg) translate(15px,0)}}
+@keyframes dealFront{0%{opacity:0;transform:translateY(146%) rotate(8deg) scale(.95)}55%{opacity:1}100%{opacity:1;transform:rotate(-1deg) translateY(-2px)}}
+/* после раздачи фиксируем стопку */
+.deck.dealt .pcard{animation:none;opacity:1}
+.deck.dealt .pcard.left{transform:rotate(-8deg) translate(-15px,3px)}
+.deck.dealt .pcard.right{transform:rotate(7deg) translate(15px,0)}
+.deck.dealt .pcard.front{transform:rotate(-1deg) translateY(-2px)}
+/* сбор по нажатию */
+.deck.go .pcard{animation:none;opacity:1}
+.deck.go .pcard.left{transform:rotate(-3deg) translate(-7px,0)}
+.deck.go .pcard.right{transform:rotate(3deg) translate(7px,0)}
+.deck.go .pcard.front{transform:translateY(-12px) scale(1.05)}
+@media (max-width:360px){.deck{transform:scale(.9)}}
+@media (max-height:620px){.deck{transform:scale(.78);margin:0 auto 8px}}
+
+/* адаптивный заголовок (длинное слово) */
+.hero h1{font-size:clamp(25px,8.4vw,46px);letter-spacing:0}
+@media (max-width:360px){.hero h1{font-size:clamp(22px,7.4vw,40px)}}
+
+.note-area{width:100%;background:#fff7e6;border:1px solid var(--line);border-radius:8px;padding:13px 15px;color:var(--ink);font-family:'Lora',serif;font-size:15px;outline:none;resize:vertical;min-height:84px;line-height:1.5}
+.note-area::placeholder{color:var(--ink);opacity:.45}
+.note-area:focus{border-color:var(--gold)}
+
+/* красивый блок «Точка сбора» */
+.brief-top{height:6px;background:linear-gradient(90deg,var(--wine),var(--gold))}
+.brief-head{text-align:center;margin-bottom:18px}
+.brief .pin{width:28px;height:auto;display:block;margin:0 auto 8px;filter:drop-shadow(0 4px 6px rgba(80,20,20,.25))}
+.brief .place{text-align:center;letter-spacing:.5px}
+.brief .sub{text-align:center}
+.brief .readout{margin:14px 0 16px}
+.brief .maplink{display:flex;justify-content:center;width:100%;margin-top:2px}
+
+/* форма «откуда забрать» */
+.taxi{background:var(--cream-card);border:1px solid var(--line);border-radius:14px;padding:22px;box-shadow:0 12px 28px -20px rgba(80,20,20,.45)}
+.taxi-lead{font-size:15px;color:var(--ink);margin-bottom:18px;line-height:1.55}
+.taxi-row{display:flex;gap:8px}
+.taxi-row input{flex:1;min-width:0;background:#fff7e6;border:1px solid var(--line);border-radius:8px;padding:14px 16px;color:var(--ink);font-family:'Lora',serif;font-size:15px;outline:none}
+.taxi-row input::placeholder{color:var(--ink);opacity:.45}
+.taxi-row input:focus{border-color:var(--gold)}
+.taxi-row button{border:none;cursor:pointer;font-family:'Playfair Display',serif;font-weight:700;font-size:14px;letter-spacing:.5px;color:#fbf0db;padding:0 22px;border-radius:8px;background:var(--wine);white-space:nowrap}
+.taxi-msg{min-height:18px;margin-top:12px;font-size:13px;font-weight:600;color:var(--ink)}
+.taxi-msg.ok{color:var(--wine)}
+.taxi-msg.err{color:var(--wine-deep)}
+.taxi-prep{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:14px;color:var(--ink);line-height:1.8}
+.taxi-prep b{color:var(--wine);font-weight:700}
 </style>
 </head>
 <body>
@@ -204,35 +264,33 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opac
 
 <!-- ИНТРО: КОНВЕРТ-ДОСЬЕ -->
 <div id="envelope">
-  <div class="env-eyebrow">совершенно секретно</div>
-  <svg class="env-svg" viewBox="0 0 270 200" xmlns="http://www.w3.org/2000/svg" aria-label="конверт">
-    <defs>
-      <linearGradient id="manila" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#e3c98e"/>
-        <stop offset="1" stop-color="#c9a861"/>
-      </linearGradient>
-    </defs>
-    <!-- лист-досье торчит сверху -->
-    <g>
-      <rect x="55" y="6" width="160" height="150" rx="4" fill="#f6f1e6" stroke="#b6a06a" stroke-width="2"/>
-      <line x1="72" y1="34" x2="198" y2="34" stroke="#c8b27e" stroke-width="3"/>
-      <line x1="72" y1="48" x2="198" y2="48" stroke="#d8c79b" stroke-width="2"/>
-      <line x1="72" y1="60" x2="170" y2="60" stroke="#d8c79b" stroke-width="2"/>
-      <text id="envName" x="135" y="24" text-anchor="middle" font-family="Oswald, sans-serif" font-size="15" letter-spacing="2" fill="#7a6533">ДОСЬЕ</text>
-    </g>
-    <!-- корпус конверта -->
-    <rect x="16" y="70" width="238" height="120" rx="8" fill="url(#manila)" stroke="#a98c4e" stroke-width="2.5"/>
-    <!-- клапан -->
-    <path d="M18 72 L135 150 L252 72" fill="none" stroke="#8f7536" stroke-width="2.5" stroke-linejoin="round"/>
-    <path d="M18 188 L96 132 M252 188 L174 132" stroke="rgba(120,90,30,.35)" stroke-width="2"/>
-    <!-- печать СЕКРЕТНО -->
-    <g transform="rotate(-12 135 124)">
-      <rect x="92" y="108" width="86" height="32" rx="4" fill="none" stroke="#d3382c" stroke-width="3"/>
-      <text x="135" y="130" text-anchor="middle" font-family="Oswald, sans-serif" font-weight="700" font-size="16" letter-spacing="1.5" fill="#d3382c">СЕКРЕТНО</text>
-    </g>
-  </svg>
-  <div class="tap-hint">досье готово к вскрытию</div>
-  <button class="btn-open" id="openBtn">ВСКРЫТЬ</button>
+  <div class="deck" id="deck">
+    <div class="pcard side left"><span class="mini-index tl">♥</span><span class="mini-index br">♥</span><span class="mini">♥</span></div>
+    <div class="pcard side right"><span class="mini-index tl">♥</span><span class="mini-index br">♥</span><span class="mini">♥</span></div>
+    <div class="pcard front">
+      <svg viewBox="0 0 250 350" xmlns="http://www.w3.org/2000/svg" aria-label="приглашение">
+        <rect x="6" y="6" width="238" height="338" rx="18" fill="#faf0d8" stroke="#9e1f33" stroke-width="3"/>
+        <rect x="14" y="14" width="222" height="322" rx="12" fill="none" stroke="rgba(158,31,51,.3)" stroke-width="1"/>
+        <text x="30" y="46" text-anchor="middle" font-family="Playfair Display, serif" font-weight="800" font-size="26" fill="#9e1f33">K</text>
+        <text x="30" y="66" text-anchor="middle" font-size="17" fill="#9e1f33">♥</text>
+        <g transform="rotate(180 220 304)">
+          <text x="220" y="304" text-anchor="middle" font-family="Playfair Display, serif" font-weight="800" font-size="26" fill="#9e1f33">K</text>
+          <text x="220" y="324" text-anchor="middle" font-size="17" fill="#9e1f33">♥</text>
+        </g>
+        <g fill="#c8a13c">
+          <path d="M85 116 L93 84 L110 104 L125 76 L140 104 L157 84 L165 116 Z"/>
+          <rect x="85" y="116" width="80" height="8" rx="2"/>
+          <circle cx="93" cy="82" r="3.6"/><circle cx="125" cy="74" r="4.2"/><circle cx="157" cy="82" r="3.6"/>
+        </g>
+        <circle cx="110" cy="112" r="2.6" fill="#9e1f33"/><circle cx="140" cy="112" r="2.6" fill="#9e1f33"/>
+        <g fill="none" stroke="#c8a13c" stroke-width="4"><circle cx="113" cy="172" r="17"/><circle cx="137" cy="172" r="17"/></g>
+        <text id="envName" x="125" y="244" text-anchor="middle" font-family="Playfair Display, serif" font-style="italic" font-weight="600" font-size="36" fill="#9e1f33">Вася</text>
+        <text x="125" y="278" text-anchor="middle" font-family="Lora, serif" font-style="italic" font-size="14" fill="#42301f">Король Червей</text>
+      </svg>
+    </div>
+  </div>
+  <div class="tap-hint">нажми на карту</div>
+  <button class="btn-open" id="openBtn" style="display:none">ОТКРЫТЬ</button>
 </div>
 
 <canvas id="cfx"></canvas>
@@ -240,10 +298,20 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opac
 <div class="wrap">
   <!-- HERO -->
   <header class="hero">
-    <div class="eyebrow">операция · только свои</div>
-    <h1 class="display">Мальчишник<br><span class="ul"></span></h1>
+    <div class="card-index tl">K<span class="s">♥</span></div>
+    <div class="card-index br">K<span class="s">♥</span></div>
+    <svg class="crown" viewBox="0 0 120 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="#c8a13c"><path d="M14 54 L24 22 L44 44 L60 14 L76 44 L96 22 L106 54 Z"/><rect x="14" y="54" width="92" height="9" rx="2"/><circle cx="24" cy="20" r="4.5"/><circle cx="60" cy="12" r="5"/><circle cx="96" cy="20" r="4.5"/></g>
+      <circle cx="40" cy="48" r="3.2" fill="#9e1f33"/><circle cx="80" cy="48" r="3.2" fill="#9e1f33"/>
+    </svg>
+    <div class="eyebrow">Король Червей женится</div>
+    <h1 class="display">МАЛЬЧИШНИК</h1>
     <span class="name" id="heroName">—</span>
+    <div class="divider"><span>♥</span></div>
     <div class="date mono" id="dateLabel">—</div>
+    <svg class="rings" viewBox="0 0 90 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="none" stroke="#c8a13c" stroke-width="4"><circle cx="34" cy="25" r="16"/><circle cx="56" cy="25" r="16"/></g>
+    </svg>
 
     <div class="countdown" id="countdown">
       <div class="cd-cell"><div class="cd-num mono" id="cdD">00</div><div class="cd-lbl">дней</div></div>
@@ -253,11 +321,22 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opac
     </div>
   </header>
 
-  <!-- ТОЧКА СБОРА -->
-  <h2 class="section-title"><span class="bar"></span>Точка сбора</h2>
-  <div class="brief">
-    <div class="brief-top"></div>
-    <div class="brief-in" id="briefIn"></div>
+  <!-- ДОРОГА: за женихом заедет такси к дому -->
+  <h2 class="section-title"><span class="bar"></span>За тобой заедем</h2>
+  <div class="taxi" id="taxiCard">
+    <p class="taxi-lead">Никуда добираться не нужно — такси заедет за тобой прямо к дому. Просто будь готов 🤝</p>
+    <div class="taxi-prep" id="taxiPrep"></div>
+  </div>
+
+  <!-- ПАРА СЛОВ -->
+  <h2 class="section-title"><span class="bar"></span>Пара слов</h2>
+  <div class="quiz" id="noteCard">
+    <p style="color:var(--ink);line-height:1.55;margin-bottom:14px">Хочешь что-то сказать нам перед началом? Пожелание, идея, что угодно 💬</p>
+    <textarea class="note-area" id="noteText" placeholder="твоё сообщение…"></textarea>
+    <div style="margin-top:10px">
+      <button id="noteSend" style="width:100%;border:none;cursor:pointer;font-family:'Playfair Display',serif;font-weight:700;color:#fbf0db;padding:14px 0;border-radius:8px;background:var(--wine)">Отправить</button>
+    </div>
+    <div class="taxi-msg" id="noteMsg" style="min-height:18px;margin-top:12px;font-size:13px;font-weight:600;color:var(--ink)"></div>
   </div>
 
   <!-- КВИЗ -->
@@ -279,8 +358,11 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opac
 
   <!-- FOOTER -->
   <div class="foot">
-    <span class="big">погнали 🔥</span>
-    остальное — засекречено. просто будь на точке вовремя.
+    <span class="big">погнали</span>
+    остальное — сюрприз. просто будь на точке вовремя.
+    <svg class="rings" viewBox="0 0 90 50" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <g fill="none" stroke="#c8a13c" stroke-width="4"><circle cx="34" cy="25" r="16"/><circle cx="56" cy="25" r="16"/></g>
+    </svg>
   </div>
 </div>
 
@@ -290,18 +372,22 @@ body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opac
    ============================================================ */
 const CONFIG = {
   heroName: "Вася",
-  dateLabel: "Суббота · 13 июня · сбор 18:30",
-  startISO:  "2026-06-13T18:30:00",      // обратный отсчёт (формат: ГГГГ-ММ-ДДTчч:мм:сс)
+  dateLabel: "Суббота · 13 июня · 17:30",
+  startISO:  "2026-06-13T17:30:00",      // обратный отсчёт (формат: ГГГГ-ММ-ДДTчч:мм:сс)
 
-  // ТОЧКА СБОРА — видно сразу (он добирается сам).
+  // Telegram: сообщения «пара слов» улетают в чат организаторам.
+  telegram: {
+    botToken: "7929788247:AAGta8UNpHvo1gt9YDDwwZUHVdFBAK74l7A",  // у @BotFather
+    chatId:   "630648933",     // id чата/пользователя (у группы — со знаком минус)
+    proxyUrl: "",              // опц.: свой эндпоинт, чтобы не светить токен
+  },
+
+  // ТАКСИ — за женихом приедет машина к дому (адрес он вводит сам).
   meet: {
-    place:     "Гребной канал",
-    address:   "Ростов-на-Дону",
-    time:      "18:30",
-    mapUrl:    "https://yandex.ru/maps/?text=Гребной канал Ростов-на-Дону",
-    // подготовка без спойлеров (что именно будет — секрет):
-    dressCode: "спортивный стиль, закрытая обувь, одежда, которую не жалко испачкать",
-    bringNote: "возьми с собой комплект сменной одежды — будет во что переодеться",
+    time:      "17:30",
+    readyBy:   "17:30",
+    dressCode: "удобная одежда и закрытая обувь",
+    bringNote: "захвати сменный комплект одежды — пригодится 😉",
   },
 
   // Разогрев-квиз (по желанию)
@@ -317,12 +403,12 @@ const CONFIG = {
     {
       type:"secret",
       emoji:"🏍️",
-      teaser:"Первый этап — с мотором, грязью и адреналином. Не зря просили одежду, которую не жалко 😏",
-      unlockISO:"2026-06-13T19:00:00",
+      teaser:"Первый этап держим в секрете. Скажем только: скучно не будет 🔥",
+      unlockISO:"2026-06-13T18:00:00",
       code:"ГАЗУЮ",
       revealEmoji:"🏍️",
       revealTitle:"Квадроциклы",
-      revealWhen:"19:00",
+      revealWhen:"18:00",
       lines:[
         { ico:"🏍️", html:"Гоняем на <b>квадроциклах</b> по бездорожью" },
         { ico:"🧰", html:"Экипировка и инструктаж — на месте" },
@@ -333,7 +419,7 @@ const CONFIG = {
     {
       type:"secret",
       emoji:"🏡",
-      teaser:"Финал — там, где можно выдохнуть, переодеться и продолжить вечер по-человечески.",
+      teaser:"Чем закончится вечер — узнаешь уже на месте 🤫",
       unlockISO:"2026-06-13T21:00:00",
       code:"ПРИВАЛ",
       revealEmoji:"🏡",
@@ -349,9 +435,9 @@ const CONFIG = {
   ],
 
   bring:[
-    { emoji:"👕", text:"Сменная одежда — переодеться после" },
-    { emoji:"👟", text:"Закрытая обувь, которую не жалко" },
-    { emoji:"🧥", text:"Куртка/ветровка — вечером прохладно" },
+    { emoji:"👕", text:"Сменную одежду — пригодится 😉" },
+    { emoji:"👟", text:"Закрытая удобная обувь" },
+    { emoji:"📸", text:"Телефон для ярких фото" },
     { emoji:"🔥", text:"Боевой настрой" },
   ],
 };
@@ -363,35 +449,65 @@ const $ = (s,el=document)=>el.querySelector(s);
 const $$ = (s,el=document)=>[...el.querySelectorAll(s)];
 const unlocked = CONFIG.stages.map(s => s.type === "open");
 
-// ---- КОНВЕРТ ----
-$("#openBtn").addEventListener("click", ()=>{
-  $("#envelope").classList.add("open");
-  burst(90);
-  setTimeout(()=>$("#envelope").remove(), 750);
-});
+// ---- ИНТРО-КОЛОДА ----
+const deck = $("#deck");
+if (deck) setTimeout(()=> deck.classList.add("dealt"), 1320);
+let opening = false;
+function openInvite(){
+  if (opening) return; opening = true;
+  if (deck) deck.classList.add("go");
+  setTimeout(()=>{ $("#envelope").classList.add("open"); burst(90); }, 560);
+  setTimeout(()=>{ const e=$("#envelope"); if(e) e.remove(); }, 1360);
+}
+if (deck) deck.addEventListener("click", openInvite);
+const _ob = $("#openBtn"); if (_ob) _ob.addEventListener("click", openInvite);
 
 // ---- HERO ----
 $("#heroName").textContent = CONFIG.heroName;
 $("#dateLabel").textContent = CONFIG.dateLabel;
-const _en = $("#envName"); if(_en) _en.textContent = "ДОСЬЕ";
+const _en = $("#envName"); if(_en) _en.textContent = CONFIG.heroName;
 
-// ---- ТОЧКА СБОРА ----
-const m = CONFIG.meet;
-const _sd = new Date(CONFIG.startISO);
-const dateShort = String(_sd.getDate()).padStart(2,"0")+"."+String(_sd.getMonth()+1).padStart(2,"0");
-$("#briefIn").innerHTML =
-  `<div class="place">${m.place}</div>
-   <div class="sub">${m.address}</div>
-   <div class="readout">
-     <div><div class="k">сбор в</div><div class="v mono">${m.time}</div></div>
-     <div><div class="k">дата</div><div class="v mono">${dateShort}</div></div>
-   </div>
-   ${m.mapUrl?`<a class="maplink" target="_blank" rel="noopener" href="${m.mapUrl}">📍 Открыть на карте</a>`:""}
-   <div class="prep">
-     <div class="row"><span class="ico">👕</span><div>Дресс-код: <b>${m.dressCode}</b></div></div>
-     <div class="row"><span class="ico">🎒</span><div><b>${m.bringNote}</b></div></div>
-     <div class="row"><span class="ico">🤫</span><div>Что будет дальше — сюрприз. Просто приезжай вовремя.</div></div>
-   </div>`;
+// ---- ДОРОГА (инфо, без ввода адреса) ----
+$("#taxiPrep").innerHTML =
+  `👕 Образ: <b>${CONFIG.meet.dressCode}</b><br>` +
+  `🎒 ${CONFIG.meet.bringNote}<br>` +
+  `⏰ Будь готов к <b>${CONFIG.meet.readyBy}</b> — дальше всё сюрприз 🤫`;
+
+// ---- TELEGRAM: «пара слов» ----
+async function tgSend(text){
+  const t = CONFIG.telegram;
+  try{
+    if (t.proxyUrl){
+      const resp = await fetch(t.proxyUrl, { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({ text }) });
+      return resp.ok;
+    }
+    // Прямой вызов Telegram: ответ непрозрачный из-за CORS, поэтому
+    // отправляем fire-and-forget и считаем успешным, если сеть не упала.
+    await fetch(`https://api.telegram.org/bot${t.botToken}/sendMessage`, {
+      method:"POST", mode:"no-cors",
+      body: new URLSearchParams({ chat_id: t.chatId, text }) });
+    return true;
+  }catch(e){ return false; }
+}
+const noteMsg = $("#noteMsg");
+$("#noteSend").addEventListener("click", sendNote);
+async function sendNote(){
+  const msg = $("#noteText").value.trim();
+  if (msg.length < 2){ noteMsg.className="taxi-msg err"; noteMsg.textContent="Напиши хоть пару слов 🙏"; return; }
+  noteMsg.className="taxi-msg"; noteMsg.textContent="Отправляю…";
+  const ok = await tgSend(`💌 Мальчишник · от жениха (${CONFIG.heroName}):\n${msg}`);
+  if (ok){
+    $("#noteCard").innerHTML =
+      `<div class="reveal" style="text-align:center">
+         <div style="font-size:40px;margin-bottom:8px">💌</div>
+         <div style="font-family:'Playfair Display',serif;font-weight:800;font-size:20px;color:var(--wine)">Принято — спасибо!</div>
+         <div style="color:var(--ink);opacity:.8;margin-top:6px">Твои слова уже у нас 🤝</div>
+       </div>`;
+  } else {
+    noteMsg.className="taxi-msg err";
+    noteMsg.textContent="Не получилось отправить. Попробуй ещё раз чуть позже.";
+  }
+}
 
 // ---- ОБРАТНЫЙ ОТСЧЁТ ----
 function tickCountdown(){
@@ -411,7 +527,7 @@ function renderQuiz(){
   if (qi >= quiz.length){
     $("#quiz").innerHTML =
       `<div class="q-result reveal"><span class="big">${CONFIG.quizVerdict.title}</span>
-       <div style="color:var(--muted)">${CONFIG.quizVerdict.text}</div></div>`;
+       <div style="color:var(--ink);opacity:.85">${CONFIG.quizVerdict.text}</div></div>`;
     revealRoute();
     return;
   }
@@ -434,10 +550,11 @@ function revealRoute(){
 renderQuiz();
 
 // ---- МАРКЕРЫ ----
+const SUIT="♥", ROM=["I","II","III","IV","V"];
 function renderStamps(){
   $("#stamps").innerHTML = CONFIG.stages.map((s,i)=>{
-    const e = unlocked[i] ? (s.revealEmoji||s.emoji) : s.emoji;
-    return `<div class="stamp ${unlocked[i]?'done':''}">${unlocked[i]?e:'?'}</div>`;
+    const e = unlocked[i] ? (s.revealEmoji||s.emoji) : (ROM[i]||i+1);
+    return `<div class="stamp ${unlocked[i]?'done':''}">${e}</div>`;
   }).join("");
 }
 
@@ -457,15 +574,12 @@ function stageOpenHTML(s){
 }
 function stageLockedHTML(s,i){
   return `<div class="stage locked" data-i="${i}">
-    <div class="lock-emoji">🔒</div>
-    <div class="lock-title">Засекречено</div>
+    <span class="ci tl">${ROM[i]||i+1}<i>${SUIT}</i></span>
+    <span class="ci br">${ROM[i]||i+1}<i>${SUIT}</i></span>
+    <div class="cb-emblem">${SUIT}<span class="cb-lock">🔒</span></div>
+    <div class="lock-title">Засекречено · ${ROM[i]||i+1}</div>
     <div class="lock-teaser">${s.teaser||""}</div>
-    <div class="lock-eta">рассекретится в ${fmtTime(s.unlockISO)} · или раньше — по кодовому слову</div>
-    <div class="code-row">
-      <input type="text" placeholder="код" maxlength="20" data-code="${i}">
-      <button data-unlock="${i}">→</button>
-    </div>
-    <div class="code-err" data-err="${i}"></div>
+    <div class="lock-eta">рассекретится в ${fmtTime(s.unlockISO)}</div>
   </div>`;
 }
 function fmtTime(iso){ const d=new Date(iso); return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); }
@@ -505,7 +619,7 @@ $("#bring").innerHTML = CONFIG.bring.map(b=>`<div><span>${b.emoji}</span>${b.tex
 /* ---- КОНФЕТТИ ---- */
 const cv=$("#cfx"), ctx=cv.getContext("2d"); let parts=[];
 function size(){cv.width=innerWidth;cv.height=innerHeight;} size(); addEventListener("resize",size);
-const COLORS=["#ff8a1e","#ffb454","#6fc0e6","#f3f5f8","#c9a861"];
+const COLORS=["#9e1f33","#c8a13c","#d9bf7a","#7d1726","#fff7e6"];
 function burst(n){
   for(let i=0;i<n;i++){
     parts.push({x:innerWidth/2,y:innerHeight*0.4, vx:(Math.random()-.5)*12, vy:(Math.random()-.9)*14,
